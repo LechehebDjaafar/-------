@@ -5,21 +5,61 @@ class NotificationsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 2,
+      child: Column(
+        children: [
+          Container(
+            margin: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(25),
+            ),
+            child: TabBar(
+              tabs: const [
+                Tab(text: 'جميع الإشعارات'),
+                Tab(text: 'الإشعارات المهمة'),
+              ],
+              indicator: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                color: Theme.of(context).primaryColor,
+              ),
+              labelColor: Colors.white,
+              unselectedLabelColor: Colors.grey,
+              labelStyle: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+          Expanded(
+            child: TabBarView(
+              children: [
+                _buildNotificationsList(showAll: true),
+                _buildNotificationsList(showAll: false),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildNotificationsList({required bool showAll}) {
     return ListView(
       padding: const EdgeInsets.all(8),
       children: [
-        _NotificationCard(
-          title: 'سلة ممتلئة',
-          message: 'سلة الشارع الرئيسي ممتلئة ويجب تفريغها',
-          time: 'منذ 5 دقائق',
-          isUrgent: true,
-        ),
-        _NotificationCard(
-          title: 'تحديث حالة',
-          message: 'تم تفريغ سلة السوق المركزي',
-          time: 'منذ ساعة',
-          isUrgent: false,
-        ),
+        if (showAll || true)
+          _NotificationCard(
+            title: 'سلة ممتلئة',
+            message: 'سلة الشارع الرئيسي ممتلئة ويجب تفريغها',
+            time: 'منذ 5 دقائق',
+            isUrgent: true,
+          ),
+        if (showAll)
+          _NotificationCard(
+            title: 'تحديث حالة',
+            message: 'تم تفريغ سلة السوق المركزي',
+            time: 'منذ ساعة',
+            isUrgent: false,
+          ),
       ],
     );
   }

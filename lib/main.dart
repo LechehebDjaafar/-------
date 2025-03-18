@@ -27,11 +27,20 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           appBarTheme: const AppBarTheme(
             centerTitle: true,
-            elevation: 0,
+            elevation: 2,
+            scrolledUnderElevation: 0,
           ),
-          navigationBarTheme: NavigationBarThemeData(
-            labelTextStyle: MaterialStateProperty.all(
-              const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+          cardTheme: CardTheme(
+            elevation: 2,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            clipBehavior: Clip.antiAlias,
+          ),
+          floatingActionButtonTheme: FloatingActionButtonThemeData(
+            elevation: 4,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
             ),
           ),
         ),
@@ -59,6 +68,7 @@ class _HomePageState extends State<HomePage> {
   String? _error;
   int _selectedIndex = 0;
 
+  // تحديث قائمة السلات لتكون متغيرة
   final List<Bin> bins = [
     Bin(
       id: '1',
@@ -67,6 +77,7 @@ class _HomePageState extends State<HomePage> {
       longitude: 1.3337,
       fillLevel: 75,
       address: 'الشارع الرئيسي، الشلف',
+      type: 'عادية',
     ),
     Bin(
       id: '2',
@@ -75,8 +86,106 @@ class _HomePageState extends State<HomePage> {
       longitude: 1.3400,
       fillLevel: 45,
       address: 'السوق المركزي، الشلف',
+      type: 'عادية',
     ),
+        Bin(
+      id: '3',
+      name: 'سلة محطة الحافلات',
+      latitude: 36.1655,
+      longitude: 1.3352,
+      fillLevel: 60,
+      address: 'محطة الحافلات، الشلف',
+      type: 'عادية',
+    ),
+    Bin(
+      id: '4',
+      name: 'سلة حي بن سونة',
+      latitude: 36.1603,
+      longitude: 1.3281,
+      fillLevel: 80,
+      address: 'حي بن سونة، الشلف',
+      type: 'عادية',
+    ),
+    Bin(
+      id: '5',
+      name: 'سلة الحي الإداري',
+      latitude: 36.1689,
+      longitude: 1.3427,
+      fillLevel: 55,
+      address: 'الحي الإداري، الشلف',
+      type: 'عادية',
+    ),
+    Bin(
+      id: '6',
+      name: 'سلة مستشفى الشلف',
+      latitude: 36.1638,
+      longitude: 1.3384,
+      fillLevel: 70,
+      address: 'مستشفى الشلف، الشلف',
+      type: 'طبية',
+    ),
+    Bin(
+      id: '7',
+      name: 'سلة جامعة حسيبة بن بوعلي',
+      latitude: 36.1625,
+      longitude: 1.3412,
+      fillLevel: 40,
+      address: 'جامعة حسيبة بن بوعلي، الشلف',
+      type: 'إعادة التدوير',
+    ),
+    Bin(
+      id: '8',
+      name: 'سلة حي الحرية',
+      latitude: 36.1584,
+      longitude: 1.3265,
+      fillLevel: 50,
+      address: 'حي الحرية، الشلف',
+      type: 'عادية',
+    ),
+    Bin(
+      id: '9',
+      name: 'سلة حديقة الحرية',
+      latitude: 36.1667,
+      longitude: 1.3369,
+      fillLevel: 65,
+      address: 'حديقة الحرية، الشلف',
+      type: 'عادية',
+    ),
+    Bin(
+      id: '10',
+      name: 'سلة شارع الإخوة بلحاج',
+      latitude: 36.1642,
+      longitude: 1.3308,
+      fillLevel: 30,
+      address: 'شارع الإخوة بلحاج، الشلف',
+      type: 'عادية',
+    ),
+    Bin(
+      id: '11',
+      name: 'سلة الميناء القديم',
+      latitude: 36.1695,
+      longitude: 1.3453,
+      fillLevel: 90,
+      address: 'الميناء القديم، الشلف',
+      type: 'عالية السعة',
+    ),
+    Bin(
+      id: '12',
+      name: 'سلة حي الشرفة',
+      latitude: 36.1570,
+      longitude: 1.3240,
+      fillLevel: 75,
+      address: 'حي الشرفة، الشلف',
+      type: 'عادية',
+    ),
+
   ];
+
+  void _addNewBin(Bin newBin) {
+    setState(() {
+      bins.add(newBin);
+    });
+  }
 
   @override
   void initState() {
