@@ -20,8 +20,8 @@ class BinsListScreen extends StatefulWidget {
 }
 
 class _BinsListScreenState extends State<BinsListScreen> {
-  final Set<String> _selectedBins = {};
-  bool _isSelectionMode = false;
+  // final Set<String> _selectedBins = {};
+  // bool _isSelectionMode = false;
 
   // إضافة متغيرات جديدة
   String _searchQuery = '';
@@ -43,16 +43,6 @@ class _BinsListScreenState extends State<BinsListScreen> {
         return matchesSearch && matchesType;
       }).toList();
 
-  void _toggleSelection(String binId) {
-    setState(() {
-      if (_selectedBins.contains(binId)) {
-        _selectedBins.remove(binId);
-      } else {
-        _selectedBins.add(binId);
-      }
-      _isSelectionMode = _selectedBins.isNotEmpty;
-    });
-  }
 
   void _deleteBin(Bin bin) {
     showDialog(

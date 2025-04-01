@@ -11,8 +11,9 @@ dependencies:
   flutter:
     sdk: flutter
   google_maps_flutter: ^2.5.0
-  # حذف مكتبة الإشعارات مؤقتاً
   cupertino_icons: ^1.0.8
+  image_picker: ^1.0.7
+  mobile_scanner: ^3.5.6
 
 dev_dependencies:
   flutter_test:

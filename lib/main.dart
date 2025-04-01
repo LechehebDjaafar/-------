@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'models/bin.dart';
-import 'screens/welcome_screen.dart';
+// import 'screens/welcome_screen.dart';
 import 'screens/notifications_screen.dart';
 import 'screens/bins_list_screen.dart';
 import 'screens/settings_screen.dart';
 import 'utils/app_localizations.dart';
 import 'screens/onboarding_screen.dart';
+import 'screens/auth_screen.dart';
+import 'screens/user_dashboard.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -67,6 +69,11 @@ class _MyAppState extends State<MyApp> {
         routes: {
           '/onboarding': (context) =>
               OnboardingScreen(translations: translations),
+          '/auth': (context) => AuthScreen(translations: translations),
+          '/user-dashboard': (context) => UserDashboard(
+                translations: translations,
+                currentLanguage: _currentLanguage,
+              ),
           '/home': (context) => HomePage(
                 translations: translations,
                 currentLanguage: _currentLanguage,
@@ -213,11 +220,11 @@ class _HomePageState extends State<HomePage> {
     ),
   ];
 
-  void _addNewBin(Bin newBin) {
-    setState(() {
-      bins.add(newBin);
-    });
-  }
+  // void _addNewBin(Bin newBin) {
+  //   setState(() {
+  //     bins.add(newBin);
+  //   });
+  // }
 
   @override
   void initState() {

@@ -111,7 +111,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       else
                         ElevatedButton(
                           onPressed: () {
-                            Navigator.pushReplacementNamed(context, '/home');
+                            Navigator.pushReplacementNamed(context, '/auth');
                           },
                           style: ElevatedButton.styleFrom(
                             padding: const EdgeInsets.symmetric(
