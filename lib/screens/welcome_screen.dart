@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import '../utils/app_localizations.dart';
 
 class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen({super.key});
+  final AppLocalizations translations;
+
+  const WelcomeScreen({super.key, required this.translations});
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +44,9 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 40),
-                const Text(
-                  'سلة+',
-                  style: TextStyle(
+                Text(
+                  translations.translate('appName'),
+                  style: const TextStyle(
                     fontSize: 56,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
@@ -53,10 +56,10 @@ class WelcomeScreen extends StatelessWidget {
                 const SizedBox(height: 16),
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 40),
-                  child: const Text(
-                    'نظام إدارة النفايات الذكي',
+                  child: Text(
+                    translations.translate('welcome'),
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 20,
                       color: Colors.white,
                       height: 1.5,
@@ -80,10 +83,10 @@ class WelcomeScreen extends StatelessWidget {
                       elevation: 5,
                       minimumSize: const Size(double.infinity, 55),
                     ),
-                    child: const Text(
-                      'ابدأ الآن',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    child: Text(
+                      translations.translate('startNow'),
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),

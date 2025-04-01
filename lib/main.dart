@@ -4,21 +4,40 @@ import 'models/bin.dart';
 import 'screens/welcome_screen.dart';
 import 'screens/notifications_screen.dart';
 import 'screens/bins_list_screen.dart';
+import 'screens/settings_screen.dart';
+import 'utils/app_localizations.dart';
+import 'screens/onboarding_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  String _currentLanguage = 'ar';
+
+  void _changeLanguage(String languageCode) {
+    setState(() {
+      _currentLanguage = languageCode;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final translations = AppLocalizations(_currentLanguage);
+
     return Directionality(
-      textDirection: TextDirection.rtl,
+      textDirection:
+          _currentLanguage == 'ar' ? TextDirection.rtl : TextDirection.ltr,
       child: MaterialApp(
-        title: 'سلة+',
+        title: translations.translate('appName'),
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
             seedColor: Colors.green,
@@ -44,10 +63,15 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        initialRoute: '/welcome',
+        initialRoute: '/onboarding',
         routes: {
-          '/welcome': (context) => const WelcomeScreen(),
-          '/home': (context) => const HomePage(),
+          '/onboarding': (context) =>
+              OnboardingScreen(translations: translations),
+          '/home': (context) => HomePage(
+                translations: translations,
+                currentLanguage: _currentLanguage,
+                onLanguageChanged: _changeLanguage,
+              ),
         },
       ),
     );
@@ -55,7 +79,16 @@ class MyApp extends StatelessWidget {
 }
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final AppLocalizations translations;
+  final String currentLanguage;
+  final Function(String) onLanguageChanged;
+
+  const HomePage({
+    super.key,
+    required this.translations,
+    required this.currentLanguage,
+    required this.onLanguageChanged,
+  });
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -88,7 +121,7 @@ class _HomePageState extends State<HomePage> {
       address: 'السوق المركزي، الشلف',
       type: 'عادية',
     ),
-        Bin(
+    Bin(
       id: '3',
       name: 'سلة محطة الحافلات',
       latitude: 36.1655,
@@ -178,7 +211,6 @@ class _HomePageState extends State<HomePage> {
       address: 'حي الشرفة، الشلف',
       type: 'عادية',
     ),
-
   ];
 
   void _addNewBin(Bin newBin) {
@@ -294,8 +326,17 @@ class _HomePageState extends State<HomePage> {
                   index: _selectedIndex,
                   children: [
                     _buildMapScreen(),
-                    BinsListScreen(bins: bins),
-                    const NotificationsScreen(),
+                    BinsListScreen(
+                      bins: bins,
+                      translations: widget.translations,
+                    ),
+                    NotificationsScreen(
+                      translations: widget.translations,
+                    ),
+                    SettingsScreen(
+                      currentLanguage: widget.currentLanguage,
+                      onLanguageChanged: widget.onLanguageChanged,
+                    ),
                   ],
                 ),
               ),
@@ -319,21 +360,26 @@ class _HomePageState extends State<HomePage> {
           onDestinationSelected: (int index) {
             setState(() => _selectedIndex = index);
           },
-          destinations: const [
+          destinations: [
             NavigationDestination(
-              icon: Icon(Icons.map_outlined),
-              selectedIcon: Icon(Icons.map_rounded),
-              label: 'الخريطة',
+              icon: const Icon(Icons.map_outlined),
+              selectedIcon: const Icon(Icons.map_rounded),
+              label: widget.translations.translate('map'),
             ),
             NavigationDestination(
-              icon: Icon(Icons.delete_outline_rounded),
-              selectedIcon: Icon(Icons.delete_rounded),
-              label: 'السلات',
+              icon: const Icon(Icons.delete_outline_rounded),
+              selectedIcon: const Icon(Icons.delete_rounded),
+              label: widget.translations.translate('bins'),
             ),
             NavigationDestination(
-              icon: Icon(Icons.notifications_outlined),
-              selectedIcon: Icon(Icons.notifications_rounded),
-              label: 'الإشعارات',
+              icon: const Icon(Icons.notifications_outlined),
+              selectedIcon: const Icon(Icons.notifications_rounded),
+              label: widget.translations.translate('notifications'),
+            ),
+            NavigationDestination(
+              icon: const Icon(Icons.settings_outlined),
+              selectedIcon: const Icon(Icons.settings_rounded),
+              label: widget.translations.translate('settings'),
             ),
           ],
         ),

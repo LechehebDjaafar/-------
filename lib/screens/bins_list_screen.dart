@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:myapp/utils/app_localizations.dart';
+
 import '../models/bin.dart';
 import 'add_bin_screen.dart';
 
 class BinsListScreen extends StatefulWidget {
   final List<Bin> bins;
-  const BinsListScreen({super.key, required this.bins});
+  final AppLocalizations translations;
+
+  const BinsListScreen({
+    super.key,
+    required this.bins,
+    required this.translations,
+  });
 
   @override
   State<BinsListScreen> createState() => _BinsListScreenState();
@@ -80,6 +88,7 @@ class _BinsListScreenState extends State<BinsListScreen> {
       context,
       MaterialPageRoute(
         builder: (context) => AddBinScreen(
+          translations: widget.translations,
           initialBin: bin,
           onBinAdded: (updatedBin) {
             setState(() {
@@ -336,7 +345,7 @@ class _BinsListScreenState extends State<BinsListScreen> {
               children: [
                 TextField(
                   decoration: InputDecoration(
-                    hintText: 'بحث...',
+                    hintText: widget.translations.translate('search'),
                     prefixIcon: const Icon(Icons.search),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -372,8 +381,8 @@ class _BinsListScreenState extends State<BinsListScreen> {
                 ? Center(
                     child: Text(
                       _searchQuery.isEmpty
-                          ? 'لا توجد سلات'
-                          : 'لا توجد نتائج للبحث',
+                          ? widget.translations.translate('noBins')
+                          : widget.translations.translate('noResults'),
                       style: TextStyle(color: Colors.grey[600]),
                     ),
                   )
@@ -481,6 +490,7 @@ class _BinsListScreenState extends State<BinsListScreen> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => AddBinScreen(
+                      translations: widget.translations,
                       onBinAdded: (newBin) {
                         setState(() {
                           widget.bins.add(newBin);

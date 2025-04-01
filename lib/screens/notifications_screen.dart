@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/utils/app_localizations.dart';
 
 class NotificationsScreen extends StatelessWidget {
-  const NotificationsScreen({super.key});
+  final AppLocalizations translations;
+
+  const NotificationsScreen({
+    super.key,
+    required this.translations,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +22,9 @@ class NotificationsScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(25),
             ),
             child: TabBar(
-              tabs: const [
-                Tab(text: 'جميع الإشعارات'),
-                Tab(text: 'الإشعارات المهمة'),
+              tabs: [
+                Tab(text: translations.translate('allNotifications')),
+                Tab(text: translations.translate('importantNotifications')),
               ],
               indicator: BoxDecoration(
                 borderRadius: BorderRadius.circular(25),

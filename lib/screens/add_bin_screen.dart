@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:myapp/utils/app_localizations.dart';
 import '../models/bin.dart';
 
 class AddBinScreen extends StatefulWidget {
   final Function(Bin) onBinAdded;
-  final Bin? initialBin; // إضافة للسماح بالتعديل
+  final Bin? initialBin;
+  final AppLocalizations translations;
 
   const AddBinScreen({
     super.key,
     required this.onBinAdded,
     this.initialBin,
+    required this.translations,
   });
 
   @override
@@ -44,8 +47,9 @@ class _AddBinScreenState extends State<AddBinScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:
-            Text(widget.initialBin != null ? 'تعديل السلة' : 'إضافة سلة جديدة'),
+        title: Text(widget.initialBin != null
+            ? widget.translations.translate('editBin')
+            : widget.translations.translate('addBin')),
       ),
       body: Form(
         key: _formKey,
@@ -54,9 +58,9 @@ class _AddBinScreenState extends State<AddBinScreen> {
           children: [
             TextFormField(
               controller: _nameController,
-              decoration: const InputDecoration(
-                labelText: 'اسم السلة',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: widget.translations.translate('binName'),
+                border: const OutlineInputBorder(),
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -68,9 +72,9 @@ class _AddBinScreenState extends State<AddBinScreen> {
             const SizedBox(height: 16),
             TextFormField(
               controller: _addressController,
-              decoration: const InputDecoration(
-                labelText: 'العنوان',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: widget.translations.translate('address'),
+                border: const OutlineInputBorder(),
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -177,8 +181,9 @@ class _AddBinScreenState extends State<AddBinScreen> {
                   );
                 }
               },
-              child: Text(
-                  widget.initialBin != null ? 'حفظ التغييرات' : 'إضافة السلة'),
+              child: Text(widget.initialBin != null
+                  ? widget.translations.translate('save')
+                  : widget.translations.translate('addBin')),
             ),
           ],
         ),
